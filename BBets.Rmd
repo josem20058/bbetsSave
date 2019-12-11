@@ -1,12 +1,12 @@
 ---
 title: "Brownlows Bets"
-author: "Your Name"
-date: "Year 2019"
+author: "Jose Muralles"
+date: "September 6, 2019"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     number_sections: yes
+    toc: yes
+  pdf_document: 
     toc: yes
 ---
 
@@ -39,13 +39,13 @@ require(tidyverse)
 
 ```{r}
 days=1:365
-count=11
+count=15
 repeatn=1000
 varstor=numeric()
 for (j in 1:repeatn){
 brownlow = 0
 for (i in 1:count) {
-  sam=sample(days,size=35,replace = T)
+  sam=sample(days,size=34,replace = T)
   y=duplicated(sam)
   if (sum(y)>0) brownlow=brownlow+1
   else brownlow = brownlow - 2
@@ -54,6 +54,8 @@ varstor[j]=brownlow
 }
 hist(varstor)
 var(varstor)
+
+print(paste('average return = ', mean(varstor)))
 
 ```
 
@@ -64,9 +66,67 @@ var(varstor)
 # Confidence interval of Brownlows earning
 
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows-->
+The 90% confidence interval represents the range of winnings where you would expect 90% of the outcomes to fall within.
+
+```{r}
+vsorted = sort(varstor)
+print(vsorted[50])
+print(vsorted[950])
+```
+
 
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If professor Brownlow is consistantly making or losing money how could he change his payout so that his profits center on zero?  Also discuss what size his class should be in order to have his current scheme balance at zero profit.!-->
+
+In order to balance his winnings he should start paying out $2.45 to $1.
+
+```{r}
+days=1:365
+count=15
+repeatn=1000
+Winnings=numeric()
+for (j in 1:repeatn){
+brownlow = 0
+for (i in 1:count) {
+  sam=sample(days,size=30,replace = T)
+  y=duplicated(sam)
+  if (sum(y)>0) brownlow=brownlow+1
+  else brownlow = brownlow - 2.45
+  
+}
+Winnings[j]=brownlow
+}
+hist(Winnings)
+var(Winnings)
+print(paste('average return =' , mean(Winnings)))
+
+```
+
+## Different Class Size
+
+In order to balance his winnings, while continuing to payout $2 to $1, the class size should between 28 or 29 students.
+```{r}
+days=1:365
+count=15
+repeatn=1000
+Winnings=numeric()
+for (j in 1:repeatn){
+brownlow = 0
+for (i in 1:count) {
+  sam=sample(days,size=28,replace = T)
+  y=duplicated(sam)
+  if (sum(y)>0) brownlow=brownlow+1
+  else brownlow = brownlow - 2
+  
+}
+Winnings[j]=brownlow
+}
+hist(Winnings)
+var(Winnings)
+print(paste('average return =' , mean(Winnings)))
+
+```
+
 
